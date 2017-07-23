@@ -3,10 +3,14 @@ package im.maple.flctmessagepush_android;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import im.maple.flctmessagepush_android.util.Encrypted;
+
+import static android.content.ContentValues.TAG;
 import static org.junit.Assert.*;
 
 /**
@@ -19,8 +23,10 @@ public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Encrypted encrypted = new Encrypted();
 
-        assertEquals("im.maple.flctmessagepush_android", appContext.getPackageName());
+        Log.v(TAG, "useAppContext: "+encrypted.encode("nihao"));
+
+        assertEquals(encrypted.encode("nihao"), "5aT48lF4Mw/0hnHvjxZnxA==");
     }
 }
