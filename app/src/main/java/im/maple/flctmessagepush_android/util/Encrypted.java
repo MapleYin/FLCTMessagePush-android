@@ -14,20 +14,30 @@ public class Encrypted {
     public static final String secretKey = "uguesswhatithink";
     public static final String secretIV = "uneverknowthatit";
 
-    Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+    Cipher encryptCipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+    Cipher decryptCipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
 
     public Encrypted() throws Exception{
         byte[] key = secretKey.getBytes("UTF-8");
         byte[] iv = secretIV.getBytes("UTF-8");
         SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
         IvParameterSpec IVSpec = new IvParameterSpec(iv);
-        cipher.init(Cipher.ENCRYPT_MODE,skeySpec,IVSpec);
+        encryptCipher.init(Cipher.ENCRYPT_MODE,skeySpec,IVSpec);
+        decryptCipher.init(Cipher.ENCRYPT_MODE,skeySpec,IVSpec);
     }
 
     public String encode(String message) throws Exception {
         byte[] messageBytes = message.getBytes("UTF-8");
-        byte[] encrypted = cipher.doFinal(messageBytes);
+        byte[] encrypted = encryptCipher.doFinal(messageBytes);
 
-        return Base64.encodeToString(encrypted, Base64.DEFAULT);
+        return Base64.encodeToString(encrypted, Base64.NO_WRAP);
+    }
+
+    public String decode(String message) throws Exception {
+
+        String base64DecodeString = new String(Base64.decode(message.getBytes(),Base64.DEFAULT));
+        byte[] decode = decryptCipher.doFinal(base64DecodeString.getBytes());
+
+        return new String(decode, "UTF8");
     }
 }
