@@ -29,6 +29,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".LoginActivity" android:theme="@style/AppTheme" />
+        <activity android:name=".SignupActivity" android:theme="@style/AppTheme" />
+
         <receiver android:name=".BroadcastReceiver.SmsReceiver">
             <intent-filter android:priority="999">
                 <!-- 订阅广播事件类型 -->

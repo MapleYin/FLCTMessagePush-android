@@ -23,7 +23,7 @@ public class Encrypted {
         SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
         IvParameterSpec IVSpec = new IvParameterSpec(iv);
         encryptCipher.init(Cipher.ENCRYPT_MODE,skeySpec,IVSpec);
-        decryptCipher.init(Cipher.ENCRYPT_MODE,skeySpec,IVSpec);
+        decryptCipher.init(Cipher.DECRYPT_MODE,skeySpec,IVSpec);
     }
 
     public String encode(String message) throws Exception {
@@ -35,8 +35,7 @@ public class Encrypted {
 
     public String decode(String message) throws Exception {
 
-        String base64DecodeString = new String(Base64.decode(message.getBytes(),Base64.DEFAULT));
-        byte[] decode = decryptCipher.doFinal(base64DecodeString.getBytes());
+        byte[] decode = decryptCipher.doFinal(Base64.decode(message,Base64.DEFAULT));
 
         return new String(decode, "UTF8");
     }

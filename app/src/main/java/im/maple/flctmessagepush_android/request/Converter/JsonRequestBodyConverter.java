@@ -1,7 +1,5 @@
 package im.maple.flctmessagepush_android.request.Converter;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 
@@ -18,7 +16,7 @@ import retrofit2.Converter;
 
 public class JsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
 
-    private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
+    private static final MediaType MEDIA_TYPE = MediaType.parse("application/octet-stream; charset=UTF-8");
     private final Gson gson;
     private final TypeAdapter<T> adapter;
 

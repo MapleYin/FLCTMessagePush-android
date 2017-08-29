@@ -8,8 +8,6 @@ import android.telephony.PhoneStateListener;
 import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
 
-import java.util.Date;
-
 import im.maple.flctmessagepush_android.request.MessageSender;
 
 /**
@@ -21,9 +19,12 @@ public class SmsReceiver extends BroadcastReceiver {
     private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
     private static final String PHONE_STATE = "android.intent.action.PHONE_STATE";
 
-    private MessageSender messageSender = new MessageSender();
+    private MessageSender messageSender = null;
 
     public void onReceive(Context context, Intent intent) {
+        if (messageSender == null) {
+            messageSender = new MessageSender(context);
+        }
         if (intent.getAction().equals(SMS_RECEIVED)){
             Bundle bundle = intent.getExtras();
             if (null != bundle) {

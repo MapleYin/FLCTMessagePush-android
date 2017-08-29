@@ -1,5 +1,6 @@
 package im.maple.flctmessagepush_android.request;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.Date;
@@ -7,7 +8,6 @@ import java.util.Date;
 import im.maple.flctmessagepush_android.Service.MessageService;
 import im.maple.flctmessagepush_android.entity.Message;
 import im.maple.flctmessagepush_android.entity.Result;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,12 +19,10 @@ import static android.content.ContentValues.TAG;
  */
 
 
-public class MessageSender extends RequestSender{
+public class MessageSender extends RequestSender<MessageService> {
 
-    MessageService service = this.retrofit.create(MessageService.class);
-
-    public MessageSender(){
-
+    public MessageSender(Context ctx) {
+        super(ctx,MessageService.class);
     }
 
     public void sendMessage(String content, String fromAddress) {
@@ -32,24 +30,16 @@ public class MessageSender extends RequestSender{
         message.content = content;
         message.timeInterval = (new Date()).getTime();
         message.fromAddress = fromAddress;
-        this.sendData(message);
-    }
 
-
-    private void sendData(Message message) {
-        Call<Result<String>> call = service.postMessage(message);
-        call.enqueue(new Callback<Result<String>>() {
+        sendData(getService().postMessage(message), new Callback<Result<String>>() {
             @Override
             public void onResponse(Call<Result<String>> call, Response<Result<String>> response) {
-                if (response.isSuccessful()) {
-                    // success
-
-                } else {
-                    // error store and retry
-                }
+                Log.d(TAG, "onResponse: "+response.body().code);
             }
+
             @Override
             public void onFailure(Call<Result<String>> call, Throwable t) {
+
             }
         });
     }

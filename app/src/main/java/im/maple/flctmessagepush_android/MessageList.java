@@ -1,13 +1,10 @@
 package im.maple.flctmessagepush_android;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import im.maple.flctmessagepush_android.request.MessageSender;
 
 /**
  * Created by maple on 2017/6/15.
@@ -16,7 +13,7 @@ import im.maple.flctmessagepush_android.request.MessageSender;
 public class MessageList extends Fragment {
     public static MessageList newInstance() {
         MessageList fragment = new MessageList();
-        MessageSender messageSender = new MessageSender();
+
         return fragment;
     }
 
