@@ -21,7 +21,6 @@ import retrofit2.Retrofit;
 
 public class RequestSender<serviceT> {
     private Context context;
-    private static String token = null;
     protected Retrofit retrofit;
 
     private serviceT service;
@@ -34,13 +33,15 @@ public class RequestSender<serviceT> {
 
     private void createRetrofit() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.99.210:3003/")
+                .baseUrl("http://api.sms.maple.im/")
                 .client(genericClient())
                 .addConverterFactory(JsonConverterFactory.create())
                 .build();
     }
 
-    private static OkHttpClient genericClient() {
+    private OkHttpClient genericClient() {
+        SharedPreferences userPerereces = context.getSharedPreferences("user",Context.MODE_PRIVATE);
+        final String token = userPerereces.getString("loginToken",null);
         return new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
                     @Override
@@ -62,7 +63,6 @@ public class RequestSender<serviceT> {
     }
 
     void saveToken(String token) {
-        RequestSender.token = token;
         SharedPreferences userPerereces = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = userPerereces.edit();
         editor.putString("loginToken",token);

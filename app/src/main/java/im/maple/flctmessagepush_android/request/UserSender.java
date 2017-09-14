@@ -34,16 +34,18 @@ public class UserSender extends RequestSender<UserService> {
         sendData(getService().login(map), new Callback<Result<String>>() {
             @Override
             public void onResponse(Call<Result<String>> call, Response<Result<String>> response) {
-                if (response.body().code == 0) {
-                    String token = response.body().data;
-                    saveToken(token);
-                    Log.i(TAG, "login token: "+response.body().data);
-                    action.perform(true);
-                } else {
-                    action.perform(false);
-                }
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().code == 0) {
+                        String token = response.body().data;
+                        saveToken(token);
+                        Log.i(TAG, "login token: "+response.body().data);
+                        action.perform(true);
+                    } else {
+                        action.perform(false);
+                    }
 
-                Log.i(TAG, "login Response: "+response.toString());
+                    Log.i(TAG, "login Response: "+response.toString());
+                }
             }
 
             @Override

@@ -25,21 +25,24 @@ public class MessageSender extends RequestSender<MessageService> {
         super(ctx,MessageService.class);
     }
 
-    public void sendMessage(String content, String fromAddress) {
+    public void sendMessage(String content, String from, String to) {
         Message message = new Message();
         message.content = content;
-        message.timeInterval = (new Date()).getTime();
-        message.fromAddress = fromAddress;
+        message.timeInterval = (new Date()).getTime()/1000;
+        message.from = from;
+        message.to = to;
 
         sendData(getService().postMessage(message), new Callback<Result<String>>() {
             @Override
             public void onResponse(Call<Result<String>> call, Response<Result<String>> response) {
-                Log.d(TAG, "onResponse: "+response.body().code);
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse: "+response.body());
+                }
             }
 
             @Override
             public void onFailure(Call<Result<String>> call, Throwable t) {
-
+                Log.d(TAG, "onResponse: "+call.toString());
             }
         });
     }

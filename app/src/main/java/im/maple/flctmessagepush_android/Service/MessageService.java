@@ -12,6 +12,6 @@ import retrofit2.http.POST;
 
 
 public interface MessageService {
-    @POST("api/message")
+    @POST("/message/receive")
     Call<Result<String>> postMessage(@Body Message message);
 }

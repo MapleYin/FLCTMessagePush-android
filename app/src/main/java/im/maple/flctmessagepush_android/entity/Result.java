@@ -6,14 +6,14 @@ package im.maple.flctmessagepush_android.entity;
 
 public class Result<T> {
     public int code;
-    public String msg;
+    public String message;
     public T data;
 
     @Override
     public String toString() {
         return "Result{" +
                 "code=" + code +
-                ", msg='" + msg + '\'' +
+                ", msg='" + message + '\'' +
                 ", data=" + data +
                 '}';
     }

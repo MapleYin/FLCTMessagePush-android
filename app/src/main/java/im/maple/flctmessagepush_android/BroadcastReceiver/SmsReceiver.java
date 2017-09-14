@@ -25,6 +25,8 @@ public class SmsReceiver extends BroadcastReceiver {
         if (messageSender == null) {
             messageSender = new MessageSender(context);
         }
+        TelephonyManager mTelephonyMgr = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        final String num = mTelephonyMgr.getLine1Number();
         if (intent.getAction().equals(SMS_RECEIVED)){
             Bundle bundle = intent.getExtras();
             if (null != bundle) {
@@ -40,7 +42,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 }
                 final String sender = messages[0].getOriginatingAddress();
                 final String message = sb.toString();
-                this.messageSender.sendMessage(message,sender);
+                this.messageSender.sendMessage(message,sender,num);
             }
         }else if( intent.getAction().equals(PHONE_STATE) ){
             final SmsReceiver self = this;
@@ -53,7 +55,7 @@ public class SmsReceiver extends BroadcastReceiver {
                         currentStatus = state;
                         final String sender = "来电提醒";
                         final String message = incomingNumber+" 正在呼叫你！";
-                        self.messageSender.sendMessage(message,sender);
+                        self.messageSender.sendMessage(message,sender,num);
                     }
                 }
             },PhoneStateListener.LISTEN_CALL_STATE);

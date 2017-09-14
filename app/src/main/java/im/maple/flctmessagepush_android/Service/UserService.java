@@ -11,6 +11,6 @@ import retrofit2.http.*;
  */
 
 public interface UserService {
-    @POST("api/authorize")
+    @POST("/user/authorize")
     Call<Result<String>> login(@Body Map<String,String> loginInfo);
 }
