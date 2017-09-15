@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import im.maple.flctmessagepush_android.AppService.AliveService;
 import im.maple.flctmessagepush_android.Manager.UserManager;
 
 
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         checkLogin();
 
+        startService();
     }
 
     private void checkLogin() {
@@ -63,5 +65,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
+    }
+
+    private void startService() {
+        Intent service = new Intent(this, AliveService.class);
+        startService(service);
     }
 }
